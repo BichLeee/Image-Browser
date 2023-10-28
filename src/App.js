@@ -33,6 +33,10 @@ function App() {
         console.log(content)
 
       })
+      .catch((e) => {
+        setLoading(false)
+        console.log("Limit Rate Exceeded")
+      })
   }, [keyWord, page])
 
   console.log(page)
