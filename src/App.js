@@ -16,6 +16,7 @@ function App() {
   const [images, setImages] = useState([])
   const [loading, setLoading] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isExceeded, setIsExceeded] = useState(false);
   const ref_div = useRef(null)
   const ref_input = useRef(null)
 
@@ -28,6 +29,7 @@ function App() {
       .then(content => {
         //setImages
         if (content.results.length == 0) setIsEmpty(true);
+        if (isExceeded == true) setIsExceeded(false)
         setImages([...images, ...content.results])
         setLoading(false)
         console.log(content)
@@ -35,6 +37,7 @@ function App() {
       })
       .catch((e) => {
         setLoading(false)
+        setIsExceeded(true)
         console.log("Limit Rate Exceeded")
       })
   }, [keyWord, page])
@@ -98,7 +101,8 @@ function App() {
           }
         </div>
         {loading && <Spinner />}
-        {isEmpty && <div>No results found </div>}
+        {isEmpty && <div>No results found ...</div>}
+        {isExceeded && <div>Limit Rate Exceeded !</div>}
       </div>
 
     </div>
